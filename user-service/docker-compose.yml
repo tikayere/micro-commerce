@@ -1,0 +1,20 @@
+services:
+  user-service:
+    build: .
+    ports:
+      - "50051;50051"
+    environment:
+      - DATABASE_URl=postgres//user:password@db:5432/uservice?sslmode=disable
+      - JWT_SECRET="USER-key
+      - GRPC_PORT"=50051
+
+    depends_on:
+      - db 
+
+
+  db: 
+      image: postgres:13
+      environment:
+        - POSTGRES_USER=user
+        - POSTGRES_PASSWORD=password
+        - POSTGRES_DB=userservice

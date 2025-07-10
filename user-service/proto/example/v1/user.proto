@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+package example.v1;
+
+option go_package = "github.com/tikayere/userservice/gen/example/v1";
+
+service UserService {
+    rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse) {}
+    rpc LoginUser(LoginUserRequest) returns (LoginUserResponse) {}
+    rpc GetUserProfile(GetUserProfileRequest) returns (GetUserProfileResponse) {}
+    rpc UpdateUserProfile(UpdateUserProfileRequest) returns (UpdateUserProfileResponse) {}
+    rpc CheckPermission(CheckPermissionRequest) returns (CheckPermissionResponse) {}
+}
+
+
+message RegisterUserRequest {
+    string email = 1;
+    string password = 2;
+    string name = 3;
+    string role = 4; // "Customer", "merchant", "admin"
+    string tenant_id = 5; // Optional for customers
+}
+
+message RegisterUserResponse {
+    string user_id = 1;
+}
+
+message LoginUserRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message LoginUserResponse {
+    string token = 1; // JWT token
+}
+
+message GetUserProfileRequest {
+    string user_id = 1;
+    string tenant_id = 2;
+}
+
+message GetUserProfileResponse {
+    string user_id = 1;
+    string email = 2;
+    string name = 3;
+    string role = 4;
+    string tenant_id = 5;
+}
+
+message UpdateUserProfileRequest {
+    string user_id = 1;
+    string tenant_id = 2;
+    string name = 3;
+    string email = 4;
+}
+
+message UpdateUserProfileResponse {
+    string user_id = 1;
+}
+
+message CheckPermissionRequest {
+    string user_id = 1;
+    string tenant_id = 2;
+    string permission = 3; // e.g., "create_product"
+}
+
+message CheckPermissionResponse {
+    bool allowed = 1;
+}
+
